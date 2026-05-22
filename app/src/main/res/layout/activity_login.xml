@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@drawable/login_bg"
+
+    android:fillViewport="true"
+
+    android:clipToPadding="false"
+    android:clipChildren="false"
+
+    android:fitsSystemWindows="false"
+
+    android:paddingTop="16dp"
+
+    android:overScrollMode="never">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+
+        android:paddingTop="40dp"
+        android:paddingBottom="24dp">
+
+        <!-- LOGO -->
+        <ImageView
+            android:layout_width="320dp"
+            android:layout_height="320dp"
+
+            android:src="@drawable/logo_redefp"
+
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+
+            android:layout_marginBottom="-10dp"/>
+
+        <!-- CAMPO EMAIL -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+
+            android:background="@drawable/input_bg"
+
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+
+                android:src="@drawable/ic_user"
+
+                android:tint="#FFD600"/>
+
+            <EditText
+                android:id="@+id/etEmail"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="15dp"
+
+                android:hint="E-mail ou usuário"
+
+                android:textColor="#FFFFFF"
+                android:textColorHint="#BDBDBD"
+
+                android:textSize="18sp"
+
+                android:background="@android:color/transparent"/>
+        </LinearLayout>
+
+        <!-- ESPAÇO TOPO -->
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="52dp"/>
+
+        <!-- CAMPO SENHA -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+
+            android:background="@drawable/input_bg"
+
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+
+                android:src="@drawable/ic_lock"
+
+                android:tint="#FFD600"/>
+
+            <EditText
+                android:id="@+id/etSenha"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="15dp"
+
+                android:hint="Senha"
+
+                android:textColor="#FFFFFF"
+                android:textColorHint="#BDBDBD"
+
+                android:textSize="18sp"
+
+                android:background="@android:color/transparent"
+
+                android:inputType="textPassword"/>
+        </LinearLayout>
+
+        <!-- BOTÃO -->
+        <Button
+            android:id="@+id/btnLogin"
+
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+
+            android:layout_marginTop="35dp"
+
+            android:text="Entrar"
+
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textSize="24sp"
+
+            android:backgroundTint="#FFD600"
+            android:textColor="#001B5E"/>
+
+        <!-- CRIAR CONTA -->
+        <TextView
+            android:id="@+id/tvCadastrar"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Não possui conta? Cadastre-se"
+
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="20dp"/>
+    </LinearLayout>
+
+</ScrollView>

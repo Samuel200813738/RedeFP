@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.RedeFP"
+        tools:targetApi="31">
+
+        <!-- FINAL -->
+        <activity
+            android:name=".SetupFinishActivity"
+            android:exported="false" />
+
+        <!-- ONBOARDING -->
+        <activity
+            android:name=".SetupAvatarActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".SetupNameActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".SetupDescriptionActivity"
+            android:exported="false" />
+
+        <!-- GRUPOS -->
+        <activity
+            android:name=".GroupsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".GroupFeedActivity"
+            android:exported="false" />
+
+        <!-- PERFIL -->
+        <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".UserProfileActivity"
+            android:exported="false" />
+
+        <!-- SOLICITAÇÕES -->
+        <activity
+            android:name=".RequestsActivity"
+            android:exported="false" />
+
+        <!-- USUÁRIOS -->
+        <activity
+            android:name=".UsersActivity"
+            android:exported="false" />
+
+        <!-- CADASTRO -->
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+
+        <!-- MAIN -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+
+        <!-- FEED -->
+        <activity
+            android:name=".FeedActivity"
+            android:exported="false" />
+
+        <!-- LOGIN -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+    </application>
+
+</manifest>

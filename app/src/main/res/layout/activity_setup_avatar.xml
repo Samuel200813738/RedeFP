@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@drawable/login_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="28dp">
+
+        <!-- VOLTAR -->
+        <ImageButton
+            android:id="@+id/btnVoltar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/transparent"
+            android:src="@android:drawable/ic_media_previous"
+            android:tint="#FFFFFF"/>
+
+        <!-- ESPAÇO -->
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"/>
+
+        <!-- TÍTULO -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Escolha como você quer aparecer 👋"
+            android:textColor="#FFFFFF"
+            android:textSize="32sp"
+            android:textStyle="bold"/>
+
+        <!-- SUBTEXTO -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Seu avatar será sua identidade dentro da RedeFP. Escolha um estilo que combine com você."
+            android:textColor="#BDBDBD"
+            android:textSize="17sp"
+            android:layout_marginTop="10dp"
+            android:lineSpacingExtra="4dp"/>
+
+        <!-- ESPAÇO -->
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"/>
+
+        <!-- AVATARES -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/avatar1"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:src="@drawable/ic_user"
+                android:layout_margin="10dp"
+                android:background="@drawable/input_bg"
+                android:padding="8dp"/>
+
+            <ImageView
+                android:id="@+id/avatar2"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:src="@drawable/ic_user"
+                android:layout_margin="10dp"
+                android:background="@drawable/input_bg"
+                android:padding="8dp"/>
+
+            <ImageView
+                android:id="@+id/avatar3"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:src="@drawable/ic_user"
+                android:layout_margin="10dp"
+                android:background="@drawable/input_bg"
+                android:padding="8dp"/>
+
+        </LinearLayout>
+
+        <!-- BOTÃO -->
+        <Button
+            android:id="@+id/btnContinuar"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="Continuar"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:layout_marginTop="60dp"
+            android:backgroundTint="#FFD600"
+            android:textColor="#001B5E"/>
+
+    </LinearLayout>
+
+</ScrollView>

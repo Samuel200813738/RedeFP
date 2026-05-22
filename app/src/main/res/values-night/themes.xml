@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- TEMA PADRÃO -->
+    <style name="Theme.RedeFP" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <!-- STATUS BAR -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+
+        <!-- FULLSCREEN -->
+        <item name="android:windowFullscreen">true</item>
+
+        <!-- DRAW SYSTEM BAR -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
+        <!-- REMOVE ACTION BAR -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <!-- EDGE TO EDGE -->
+        <item name="android:windowLayoutInDisplayCutoutMode">
+            shortEdges
+        </item>
+
+    </style>
+
+</resources>

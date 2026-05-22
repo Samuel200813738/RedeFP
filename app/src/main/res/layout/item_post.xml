@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginTop="10dp"
+
+    android:background="@drawable/post_card_bg"
+
+    android:elevation="5dp"
+
+    android:outlineProvider="background"
+
+    android:clipToOutline="true">
+
+    <!-- EFEITO -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:src="@drawable/effect_post"
+
+        android:scaleType="fitXY"
+
+        android:alpha="0.75"/>
+
+    <!-- CONTEÚDO -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+
+        android:padding="18dp">
+
+        <!-- AVATAR -->
+        <ImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+
+            android:src="@drawable/ic_user"
+
+            android:scaleType="centerCrop"
+
+            android:background="@drawable/input_bg"
+
+            android:padding="6dp"/>
+
+        <!-- LADO DIREITO -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_weight="1"
+
+            android:orientation="vertical"
+
+            android:layout_marginStart="14dp">
+
+            <!-- TOPO -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal"
+
+                android:gravity="center_vertical">
+
+                <!-- NOME -->
+                <TextView
+                    android:id="@+id/tvNome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="REDEFP Oficial"
+
+                    android:textColor="#FFFFFF"
+
+                    android:textSize="17sp"
+
+                    android:textStyle="bold"/>
+
+                <!-- USER -->
+                <TextView
+                    android:id="@+id/tvSerie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text=" @redefp"
+
+                    android:textColor="#9BA7B8"
+
+                    android:textSize="14sp"
+
+                    android:layout_marginStart="6dp"/>
+
+                <!-- TEMPO -->
+                <TextView
+                    android:id="@+id/tvHorario"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text=" · 2m"
+
+                    android:textColor="#777777"
+
+                    android:textSize="14sp"
+
+                    android:layout_marginStart="4dp"/>
+            </LinearLayout>
+
+            <!-- TEXTO -->
+            <TextView
+                android:id="@+id/tvTexto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:text="📢 Atenção, pessoal! As inscrições para o Encontro de Projetos 2024 já estão abertas!"
+
+                android:textColor="#FFFFFF"
+
+                android:textSize="17sp"
+
+                android:lineSpacingExtra="4dp"
+
+                android:layout_marginTop="8dp"/>
+
+            <!-- AÇÕES -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal"
+
+                android:gravity="center_vertical"
+
+                android:layout_marginTop="18dp">
+
+                <!-- COMENTAR -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal"
+
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+
+                        android:src="@android:drawable/ic_menu_edit"
+
+                        android:tint="#7F8EA3"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="4"
+
+                        android:textColor="#7F8EA3"
+
+                        android:textSize="13sp"
+
+                        android:layout_marginStart="5dp"/>
+                </LinearLayout>
+
+                <!-- CURTIR -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal"
+
+                    android:gravity="center_vertical"
+
+                    android:layout_marginStart="32dp">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+
+                        android:src="@android:drawable/btn_star_big_off"
+
+                        android:tint="#FF4D88"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="56"
+
+                        android:textColor="#FFFFFF"
+
+                        android:textSize="13sp"
+
+                        android:layout_marginStart="5dp"/>
+                </LinearLayout>
+
+                <!-- VISUALIZAÇÕES -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal"
+
+                    android:gravity="center_vertical"
+
+                    android:layout_marginStart="32dp">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+
+                        android:src="@android:drawable/ic_menu_sort_by_size"
+
+                        android:tint="#7F8EA3"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="1,2K"
+
+                        android:textColor="#7F8EA3"
+
+                        android:textSize="13sp"
+
+                        android:layout_marginStart="5dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,100 @@
+package com.example.redefp
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+
+class FeedAdapter(
+    private val listaPosts: List<PostModel>
+) : RecyclerView.Adapter<FeedAdapter.PostViewHolder>() {
+
+    class PostViewHolder(itemView: View)
+        : RecyclerView.ViewHolder(itemView) {
+
+        val tvNome: TextView =
+            itemView.findViewById(R.id.tvNome)
+
+        val tvSerie: TextView =
+            itemView.findViewById(R.id.tvSerie)
+
+        val tvHorario: TextView =
+            itemView.findViewById(R.id.tvHorario)
+
+        val tvTexto: TextView =
+            itemView.findViewById(R.id.tvTexto)
+
+        val imgAvatar: ImageView =
+            itemView.findViewById(R.id.imgAvatar)
+    }
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): PostViewHolder {
+
+        val view = LayoutInflater.from(parent.context)
+            .inflate(
+                R.layout.item_post,
+                parent,
+                false
+            )
+
+        return PostViewHolder(view)
+    }
+
+    override fun onBindViewHolder(
+        holder: PostViewHolder,
+        position: Int
+    ) {
+
+        val post = listaPosts[position]
+
+        holder.tvNome.text = post.nome
+
+        holder.tvSerie.text =
+            "• ${post.serie}"
+
+        holder.tvHorario.text =
+            "• ${post.horario}"
+
+        holder.tvTexto.text = post.texto
+
+        val context =
+            holder.itemView.context
+
+        val avatarResource =
+            context.resources.getIdentifier(
+                post.avatarId,
+                "drawable",
+                context.packageName
+            )
+
+        // FALLBACK
+        if (avatarResource != 0) {
+
+            holder.imgAvatar
+                .setImageResource(avatarResource)
+
+        } else {
+
+            holder.imgAvatar
+                .setImageResource(R.drawable.ic_user)
+        }
+
+        // ANIMAÇÃO
+        holder.itemView.alpha = 0f
+
+        holder.itemView.animate()
+            .alpha(1f)
+            .setDuration(300)
+            .start()
+    }
+
+    override fun getItemCount(): Int {
+
+        return listaPosts.size
+    }
+}

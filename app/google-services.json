@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "959441122812",
+    "firebase_url": "https://rede-fp-default-rtdb.firebaseio.com",
+    "project_id": "rede-fp",
+    "storage_bucket": "rede-fp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:959441122812:android:243529d9bb440ecfe4ee79",
+        "android_client_info": {
+          "package_name": "com.example.redefp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDW-bsyQOIek5BQQ_VR26VNsBHQKl7VYZE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@drawable/login_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="28dp">
+
+        <!-- VOLTAR -->
+        <ImageButton
+            android:id="@+id/btnVoltar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/transparent"
+            android:src="@android:drawable/ic_media_previous"
+            android:tint="#FFFFFF"/>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"/>
+
+        <!-- TÍTULO -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Como devemos chamar você?"
+            android:textColor="#FFFFFF"
+            android:textSize="34sp"
+            android:textStyle="bold"/>
+
+        <!-- SUB -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Seu nome aparecerá em avisos, comentários e interações dentro da escola."
+            android:textColor="#BDBDBD"
+            android:textSize="17sp"
+            android:layout_marginTop="10dp"/>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"/>
+
+        <!-- INPUT -->
+        <EditText
+            android:id="@+id/etNome"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:hint="Digite seu nome"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#9E9E9E"
+            android:textSize="18sp"
+            android:paddingHorizontal="20dp"
+            android:background="@drawable/input_bg"/>
+
+        <!-- BOTÃO -->
+        <Button
+            android:id="@+id/btnContinuar"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="Continuar"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:layout_marginTop="60dp"
+            android:backgroundTint="#FFD600"
+            android:textColor="#001B5E"/>
+
+    </LinearLayout>
+
+</ScrollView>
