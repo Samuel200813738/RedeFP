@@ -17,9 +17,6 @@ class FeedAdapter(
         val tvNome: TextView =
             itemView.findViewById(R.id.tvNome)
 
-        val tvSerie: TextView =
-            itemView.findViewById(R.id.tvSerie)
-
         val tvHorario: TextView =
             itemView.findViewById(R.id.tvHorario)
 
@@ -53,9 +50,6 @@ class FeedAdapter(
         val post = listaPosts[position]
 
         holder.tvNome.text = post.nome
-
-        holder.tvSerie.text =
-            "• ${post.serie}"
 
         holder.tvHorario.text =
             "• ${post.horario}"
