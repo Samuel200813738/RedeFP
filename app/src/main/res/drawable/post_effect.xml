@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- EFEITO TOPO DIREITO -->
+    <item
+        android:gravity="top|right">
+
+        <bitmap
+            android:src="@drawable/post_effect_bg"
+            android:gravity="top|right"/>
+    </item>
+
+</layer-list>
