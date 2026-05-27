@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- LINHA AMARELA EMBAIXO -->
+    <item>
+        <shape>
+            <solid android:color="@android:color/transparent"/>
+        </shape>
+    </item>
+
     <item android:gravity="bottom">
-        <shape android:shape="rectangle">
-
-            <size android:height="3dp"/>
-
+        <shape>
+            <size android:height="4dp"/>
             <solid android:color="#FFD600"/>
         </shape>
     </item>

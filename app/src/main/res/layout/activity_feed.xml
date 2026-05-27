@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:background="#001B4A"
+    android:background="#00112E"
 
     android:fitsSystemWindows="false"
 
@@ -35,217 +35,149 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:orientation="vertical"
-
         android:clipToPadding="false"
         android:clipChildren="false">
 
-        <!-- TOPO -->
+        <!-- TOPO (MANTIDO COM A LOGO MAIOR) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:orientation="horizontal"
             android:gravity="center_vertical"
-
             android:paddingStart="6dp"
             android:paddingEnd="6dp"
-
-            android:layout_marginTop="2dp">
+            android:layout_marginTop="4dp">
 
             <!-- MENU -->
             <ImageButton
                 android:id="@+id/btnMenu"
-
                 android:layout_width="34dp"
                 android:layout_height="34dp"
-
                 android:src="@android:drawable/ic_menu_sort_by_size"
-
                 android:background="@android:color/transparent"
-
                 android:contentDescription="Menu"
-
                 app:tint="#FFFFFF"/>
 
-            <!-- LOGO -->
+            <!-- LOGO (PERMANECE GRANDE E CENTRALIZADA) -->
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="72dp"
-
+                android:layout_height="90dp"
                 android:layout_weight="1"
-
                 android:src="@drawable/logo_redefpfeed"
-
                 android:adjustViewBounds="true"
-
                 android:scaleType="fitCenter"/>
 
             <!-- NOTIFICAÇÃO -->
             <ImageButton
                 android:id="@+id/btnNotificacao"
-
                 android:layout_width="34dp"
                 android:layout_height="34dp"
-
                 android:src="@android:drawable/ic_dialog_info"
-
                 android:background="@android:color/transparent"
-
                 android:contentDescription="Notificações"
-
                 app:tint="#FFFFFF"/>
         </LinearLayout>
 
-        <!-- ABAS -->
-        <HorizontalScrollView
+
+        <!-- ABAS (ALINHADAS AO FINAL DO HEADER DE 135DP) -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginTop="-3dp"
+            android:orientation="horizontal"
+            android:weightSum="4"
+            android:background="@android:color/transparent">
 
-            android:layout_marginTop="-8dp"
+        <TextView
+            android:id="@+id/tabParaVoce"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Para você"
+            android:textColor="#FFD600"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:background="@drawable/tab_selected_bg"/>
 
-            android:scrollbars="none"
+        <TextView
+            android:id="@+id/tabSeguindo"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Seguindo"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"/>
 
-            android:overScrollMode="never">
+        <TextView
+            android:id="@+id/tabTurmas"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Turmas"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"/>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+        <TextView
+            android:id="@+id/tabTudo"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Tudo"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"/>
+    </LinearLayout>
 
-                android:orientation="horizontal"
 
-                android:paddingHorizontal="10dp"
-
-                android:background="#031733">
-
-                <TextView
-                    android:id="@+id/tabParaVoce"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:text="Para você"
-
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold"
-
-                    android:textSize="15sp"
-
-                    android:paddingHorizontal="14dp"
-                    android:paddingVertical="10dp"
-
-                    android:background="@drawable/tab_selected_bg"/>
-
-                <TextView
-                    android:id="@+id/tabSeguindo"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:text="Seguindo"
-
-                    android:textColor="#FFFFFF"
-
-                    android:textSize="15sp"
-
-                    android:paddingHorizontal="14dp"
-                    android:paddingVertical="10dp"/>
-
-                <TextView
-                    android:id="@+id/tabTurmas"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:text="Turmas"
-
-                    android:textColor="#FFFFFF"
-
-                    android:textSize="15sp"
-
-                    android:paddingHorizontal="14dp"
-                    android:paddingVertical="10dp"/>
-
-                <TextView
-                    android:id="@+id/tabTudo"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:text="Tudo"
-
-                    android:textColor="#FFFFFF"
-
-                    android:textSize="15sp"
-
-                    android:paddingHorizontal="14dp"
-                    android:paddingVertical="10dp"/>
-            </LinearLayout>
-        </HorizontalScrollView>
-
-        <!-- CARD POST -->
+    <!-- CARD POST (AJUSTADO) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:orientation="horizontal"
-
             android:padding="10dp"
 
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="22dp"
 
             android:background="@drawable/input_bg"
 
             android:elevation="3dp"
 
             android:clipToOutline="true"
-
-            android:translationY="8dp">
+            android:outlineProvider="background">
 
             <!-- AVATAR -->
             <ImageView
                 android:layout_width="42dp"
                 android:layout_height="42dp"
-
                 android:src="@drawable/ic_user"
-
                 android:padding="8dp"
-
                 android:background="@drawable/input_bg"
-
                 android:contentDescription="Avatar"
-
                 app:tint="#FFD600"/>
 
             <!-- INPUT -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-
                 android:layout_weight="1"
-
                 android:orientation="vertical"
-
                 android:layout_marginStart="10dp">
 
                 <EditText
                     android:id="@+id/etPost"
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:hint="O que você precisa avisar?"
-
                     android:textColor="#FFFFFF"
                     android:textColorHint="#9CA3AF"
-
                     android:textSize="15sp"
-
                     android:padding="0dp"
-
                     android:background="@android:color/transparent"/>
 
                 <!-- BOTÃO -->
