@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -31,6 +32,10 @@ class FeedActivity : AppCompatActivity() {
 
     private lateinit var btnMenu: ImageButton
     private lateinit var btnNotificacao: ImageButton
+
+    // NOVOS
+    private lateinit var etPost: EditText
+    private lateinit var btnPostar: ImageButton
 
     private val posts = ArrayList<PostModel>()
 
@@ -66,8 +71,6 @@ class FeedActivity : AppCompatActivity() {
         navMensagens =
             findViewById(R.id.navMensagens)
 
-
-
         navEu =
             findViewById(R.id.navEu)
 
@@ -76,6 +79,13 @@ class FeedActivity : AppCompatActivity() {
 
         btnNotificacao =
             findViewById(R.id.btnNotificacao)
+
+        // NOVOS
+        etPost =
+            findViewById(R.id.etPost)
+
+        btnPostar =
+            findViewById(R.id.btnPostar)
 
         adapter = FeedAdapter(posts)
 
@@ -86,6 +96,61 @@ class FeedActivity : AppCompatActivity() {
             adapter
 
         carregarPosts()
+
+        // POSTAR
+        btnPostar.setOnClickListener {
+
+            val texto =
+                etPost.text.toString().trim()
+
+            if (texto.isEmpty()) {
+
+                Toast.makeText(
+                    this,
+                    "Digite algo",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                return@setOnClickListener
+            }
+
+            val uid =
+                auth.currentUser?.uid ?: return@setOnClickListener
+
+            val post = hashMapOf(
+
+                "uid" to uid,
+
+                "nome" to "samuel",
+
+                "texto" to texto,
+
+                "horario" to "Agora",
+
+                "avatarId" to "ic_user"
+            )
+
+            db.collection("posts")
+                .add(post)
+                .addOnSuccessListener {
+
+                    etPost.text.clear()
+
+                    Toast.makeText(
+                        this,
+                        "Postado!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                .addOnFailureListener {
+
+                    Toast.makeText(
+                        this,
+                        "Erro ao postar",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+        }
 
         // MENU
         btnMenu.setOnClickListener {

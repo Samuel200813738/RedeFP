@@ -121,9 +121,7 @@
 
                     android:textSize="10sp"
 
-                    android:maxLines="2"
-
-                    android:ellipsize="end"/>
+                    android:lineSpacingExtra="1dp"/>
             </LinearLayout>
 
         </LinearLayout>
