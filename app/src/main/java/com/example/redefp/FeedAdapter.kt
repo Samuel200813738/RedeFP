@@ -75,7 +75,7 @@ class FeedAdapter(
         } else {
 
             holder.imgAvatar
-                .setImageResource(R.drawable.ic_user)
+                .setImageResource(R.drawable.user_profile)
         }
 
         // ANIMAÇÃO

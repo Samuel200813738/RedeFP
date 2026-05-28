@@ -2,6 +2,7 @@ package com.example.redefp
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -9,7 +10,9 @@ import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -27,11 +30,24 @@ class FeedActivity : AppCompatActivity() {
 
     private lateinit var navHome: LinearLayout
     private lateinit var navBuscar: LinearLayout
-    private lateinit var navMensagens: LinearLayout
     private lateinit var navEu: LinearLayout
-
-    private lateinit var btnMenu: ImageButton
     private lateinit var btnNotificacao: ImageButton
+
+    // VARIÁVEIS DAS ABAS
+    private lateinit var tabParaVoce: TextView
+    private lateinit var tabTurmas: TextView
+    private lateinit var tabTudo: TextView
+    private lateinit var listaDeAbas: List<TextView>
+
+    // ÍCONES NAVBAR
+    private lateinit var iconHome: ImageView
+    private lateinit var iconBuscar: ImageView
+    private lateinit var iconEu: ImageView
+
+    // TEXTOS NAVBAR
+    private lateinit var textHome: TextView
+    private lateinit var textBuscar: TextView
+    private lateinit var textEu: TextView
 
     // NOVOS
     private lateinit var etPost: EditText
@@ -68,17 +84,37 @@ class FeedActivity : AppCompatActivity() {
         navBuscar =
             findViewById(R.id.navBuscar)
 
-        navMensagens =
-            findViewById(R.id.navMensagens)
-
         navEu =
             findViewById(R.id.navEu)
 
-        btnMenu =
-            findViewById(R.id.btnMenu)
-
         btnNotificacao =
             findViewById(R.id.btnNotificacao)
+
+        // INICIALIZAR ABAS
+        tabParaVoce = findViewById(R.id.tabParaVoce)
+        tabTurmas = findViewById(R.id.tabTurmas)
+        tabTudo = findViewById(R.id.tabTudo)
+        listaDeAbas = listOf(tabParaVoce, tabTurmas, tabTudo)
+
+        // ÍCONES
+        iconHome =
+            findViewById(R.id.iconHome)
+
+        iconBuscar =
+            findViewById(R.id.iconBuscar)
+
+        iconEu =
+            findViewById(R.id.iconEu)
+
+        // TEXTOS
+        textHome =
+            findViewById(R.id.textHome)
+
+        textBuscar =
+            findViewById(R.id.textBuscar)
+
+        textEu =
+            findViewById(R.id.textEu)
 
         // NOVOS
         etPost =
@@ -96,6 +132,13 @@ class FeedActivity : AppCompatActivity() {
             adapter
 
         carregarPosts()
+
+        // LÓGICA DE CLIQUE NAS ABAS SUPERIORES
+        listaDeAbas.forEach { aba ->
+            aba.setOnClickListener {
+                atualizarEstiloAbas(it as TextView)
+            }
+        }
 
         // POSTAR
         btnPostar.setOnClickListener {
@@ -152,22 +195,6 @@ class FeedActivity : AppCompatActivity() {
                 }
         }
 
-        // MENU
-        btnMenu.setOnClickListener {
-
-            startActivity(
-                Intent(
-                    this,
-                    GroupsActivity::class.java
-                )
-            )
-
-            overridePendingTransition(
-                R.anim.slide_in_right,
-                R.anim.slide_out_left
-            )
-        }
-
         // NOTIFICAÇÕES TOPO
         btnNotificacao.setOnClickListener {
 
@@ -178,14 +205,45 @@ class FeedActivity : AppCompatActivity() {
             ).show()
         }
 
+        fun resetIcons() {
+
+            iconHome.setColorFilter(Color.WHITE)
+            iconBuscar.setColorFilter(Color.WHITE)
+            iconEu.setColorFilter(Color.WHITE)
+
+            textHome.setTextColor(Color.WHITE)
+            textBuscar.setTextColor(Color.WHITE)
+            textEu.setTextColor(Color.WHITE)
+        }
+
         // HOME
         navHome.setOnClickListener {
+
+            resetIcons()
+
+            iconHome.setColorFilter(
+                Color.parseColor("#FFD600")
+            )
+
+            textHome.setTextColor(
+                Color.parseColor("#FFD600")
+            )
 
             recyclerPosts.smoothScrollToPosition(0)
         }
 
         // BUSCAR
         navBuscar.setOnClickListener {
+
+            resetIcons()
+
+            iconBuscar.setColorFilter(
+                Color.parseColor("#FFD600")
+            )
+
+            textBuscar.setTextColor(
+                Color.parseColor("#FFD600")
+            )
 
             startActivity(
                 Intent(
@@ -200,18 +258,18 @@ class FeedActivity : AppCompatActivity() {
             )
         }
 
-        // MENSAGENS
-        navMensagens.setOnClickListener {
-
-            Toast.makeText(
-                this,
-                "Mensagens em breve",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-
         // PERFIL
         navEu.setOnClickListener {
+
+            resetIcons()
+
+            iconEu.setColorFilter(
+                Color.parseColor("#FFD600")
+            )
+
+            textEu.setTextColor(
+                Color.parseColor("#FFD600")
+            )
 
             val intent = Intent(
                 this,
@@ -229,6 +287,23 @@ class FeedActivity : AppCompatActivity() {
                 R.anim.slide_in_right,
                 R.anim.slide_out_left
             )
+        }
+    }
+
+    // FUNÇÃO PARA ATUALIZAR O VISUAL DAS ABAS (PARA VOCÊ, TURMAS, TUDO)
+    private fun atualizarEstiloAbas(abaSelecionada: TextView) {
+        listaDeAbas.forEach { aba ->
+            if (aba == abaSelecionada) {
+                // Estilo Ativo: Amarelo, Negrito e Fundo Selecionado
+                aba.setTextColor(Color.parseColor("#FFD600"))
+                aba.setTypeface(null, Typeface.BOLD)
+                aba.setBackgroundResource(R.drawable.tab_selected_bg)
+            } else {
+                // Estilo Inativo: Branco, Normal e Sem Fundo
+                aba.setTextColor(Color.WHITE)
+                aba.setTypeface(null, Typeface.NORMAL)
+                aba.setBackgroundResource(android.R.color.transparent)
+            }
         }
     }
 

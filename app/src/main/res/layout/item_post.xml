@@ -58,7 +58,7 @@
 
                 android:padding="5dp"
 
-                android:src="@drawable/ic_user"
+                android:src="@drawable/user_profile"
 
                 android:background="@drawable/input_bg"
 

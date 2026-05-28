@@ -49,20 +49,10 @@
             android:paddingEnd="6dp"
             android:layout_marginTop="4dp">
 
-            <!-- MENU -->
-            <ImageButton
-                android:id="@+id/btnMenu"
-                android:layout_width="34dp"
-                android:layout_height="34dp"
-                android:src="@android:drawable/ic_menu_sort_by_size"
-                android:background="@android:color/transparent"
-                android:contentDescription="Menu"
-                app:tint="#FFFFFF"/>
-
             <!-- LOGO (PERMANECE GRANDE E CENTRALIZADA) -->
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="90dp"
+                android:layout_height="115dp"
                 android:layout_weight="1"
                 android:src="@drawable/logo_redefpfeed"
                 android:adjustViewBounds="true"
@@ -71,8 +61,8 @@
             <!-- NOTIFICAÇÃO -->
             <ImageButton
                 android:id="@+id/btnNotificacao"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
 
                 android:src="@drawable/ic_notification"
 
@@ -84,57 +74,53 @@
         </LinearLayout>
 
 
-        <!-- ABAS (ALINHADAS AO FINAL DO HEADER DE 135DP) -->
+        <!-- ABAS (ALINHADAS AO FINAL DO HEADER DE 135DP - AGORA COM 3 ITENS) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:layout_marginTop="-3dp"
+            android:layout_marginTop="-28dp"
             android:orientation="horizontal"
-            android:weightSum="4"
+            android:weightSum="3"
             android:background="@android:color/transparent">
 
-        <TextView
-            android:id="@+id/tabParaVoce"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Para você"
-            android:textColor="#FFD600"
-            android:textStyle="bold"
-            android:textSize="15sp"
-            android:background="@drawable/tab_selected_bg"/>
+            <!-- PARA VOCÊ -->
+            <TextView
+                android:id="@+id/tabParaVoce"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Para você"
+                android:textColor="#FFD600"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:background="@drawable/tab_selected_bg"/>
 
-        <TextView
-            android:id="@+id/tabSeguindo"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Seguindo"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"/>
+            <!-- TURMAS -->
+            <TextView
+                android:id="@+id/tabTurmas"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Turmas"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:background="@android:color/transparent"/>
 
-        <TextView
-            android:id="@+id/tabTurmas"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Turmas"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"/>
+            <!-- TUDO -->
+            <TextView
+                android:id="@+id/tabTudo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Tudo"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:background="@android:color/transparent"/>
 
-        <TextView
-            android:id="@+id/tabTudo"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Tudo"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"/>
-    </LinearLayout>
+        </LinearLayout>
 
 
     <!-- CARD POST (AJUSTADO) -->
@@ -159,7 +145,7 @@
             <ImageView
                 android:layout_width="42dp"
                 android:layout_height="42dp"
-                android:src="@drawable/ic_user"
+                android:src="@drawable/user_profile"
                 android:padding="8dp"
                 android:background="@drawable/input_bg"
                 android:contentDescription="Avatar"
@@ -279,14 +265,19 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/iconHome"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
 
-                android:src="@android:drawable/ic_menu_view"
+                android:src="@drawable/ic_home"
+
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
 
                 app:tint="#FFD600"/>
 
             <TextView
+                android:id="@+id/textHome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
@@ -295,6 +286,7 @@
                 android:textColor="#FFD600"
 
                 android:textSize="12sp"/>
+
         </LinearLayout>
 
         <!-- BUSCAR -->
@@ -310,49 +302,21 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/iconBuscar"
+
                 android:layout_width="22dp"
                 android:layout_height="22dp"
 
-                android:src="@android:drawable/ic_menu_search"
+                android:src="@drawable/ic_search"
 
                 app:tint="#FFFFFF"/>
 
             <TextView
+                android:id="@+id/textBuscar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
                 android:text="Buscar"
-
-                android:textColor="#FFFFFF"
-
-                android:textSize="12sp"/>
-        </LinearLayout>
-
-        <!-- MENSAGENS -->
-        <LinearLayout
-            android:id="@+id/navMensagens"
-
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-
-            android:layout_weight="1"
-
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-
-                android:src="@android:drawable/ic_dialog_email"
-
-                app:tint="#FFFFFF"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:text="Mensagens"
 
                 android:textColor="#FFFFFF"
 
@@ -372,14 +336,17 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:id="@+id/iconEu"
 
-                android:src="@drawable/ic_user"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+
+                android:src="@drawable/user_profile"
 
                 app:tint="#FFFFFF"/>
 
             <TextView
+                android:id="@+id/textEu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 

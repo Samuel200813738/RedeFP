@@ -63,7 +63,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
 
-                android:src="@drawable/ic_user"
+                android:src="@drawable/user_profile"
 
                 android:tint="#FFD600"/>
 
