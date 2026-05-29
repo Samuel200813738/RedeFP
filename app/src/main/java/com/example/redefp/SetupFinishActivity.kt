@@ -96,6 +96,11 @@ class SetupFinishActivity : AppCompatActivity() {
                         imgAvatar.setImageResource(
                             avatarResource
                         )
+
+                        // AVATAR AMARELO
+                        imgAvatar.setColorFilter(
+                            Color.parseColor("#FFD600")
+                        )
                     }
                 }
             }

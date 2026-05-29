@@ -48,6 +48,15 @@ class SetupNameActivity : AppCompatActivity() {
         val btnVoltar =
             findViewById<ImageButton>(R.id.btnVoltar)
 
+        // NOVA SETA
+        btnVoltar.setImageResource(
+            R.drawable.ic_seta_voltar
+        )
+
+        btnVoltar.setBackgroundColor(
+            Color.TRANSPARENT
+        )
+
         // CONTINUAR
         btnContinuar.setOnClickListener {
 

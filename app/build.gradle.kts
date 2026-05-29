@@ -37,6 +37,8 @@ android {
 }
 
 dependencies {
+    // BIBLIOTECA ADICIONADA PARA CORRIGIR O ERRO DA SPLASH SCREEN
+    implementation("androidx.core:core-splashscreen:1.0.1")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

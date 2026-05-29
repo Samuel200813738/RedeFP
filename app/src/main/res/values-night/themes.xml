@@ -1,27 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- TEMA PADRÃO -->
     <style name="Theme.RedeFP" parent="Theme.Material3.DayNight.NoActionBar">
 
-        <!-- STATUS BAR -->
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/black</item>
+        <item name="android:statusBarColor">
+            @android:color/transparent
+        </item>
 
-        <!-- FULLSCREEN -->
-        <item name="android:windowFullscreen">true</item>
+        <item name="android:navigationBarColor">
+            @android:color/black
+        </item>
 
-        <!-- DRAW SYSTEM BAR -->
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowFullscreen">
+            true
+        </item>
 
-        <!-- REMOVE ACTION BAR -->
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">
+            true
+        </item>
 
-        <!-- EDGE TO EDGE -->
+        <item name="windowActionBar">
+            false
+        </item>
+
+        <item name="windowNoTitle">
+            true
+        </item>
+
         <item name="android:windowLayoutInDisplayCutoutMode">
             shortEdges
+        </item>
+
+    </style>
+
+    <!-- SPLASH SCREEN -->
+    <style name="Theme.RedeFP.Splash" parent="Theme.SplashScreen">
+
+        <!-- FUNDO -->
+        <item name="windowSplashScreenBackground">
+            @color/ic_launcher_background
+        </item>
+
+        <!-- ÍCONE -->
+        <item name="windowSplashScreenAnimatedIcon">
+            @mipmap/ic_launcher
+        </item>
+
+        <!-- TEMA APÓS SPLASH -->
+        <item name="postSplashScreenTheme">
+            @style/Theme.RedeFP
+        </item>
+
+        <!-- ANDROID 11 OU INFERIOR -->
+        <item name="android:windowBackground">
+            @color/ic_launcher_background
         </item>
 
     </style>

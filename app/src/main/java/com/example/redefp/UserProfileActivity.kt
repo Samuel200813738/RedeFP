@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.animation.AnimationUtils
 import android.widget.ArrayAdapter
+import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -55,6 +56,18 @@ class UserProfileActivity : AppCompatActivity() {
         listPosts =
             findViewById(R.id.listPosts)
 
+        val btnVoltar =
+            findViewById<ImageButton>(R.id.btnVoltar)
+
+        // NOVA SETA
+        btnVoltar.setImageResource(
+            R.drawable.ic_seta_voltar
+        )
+
+        btnVoltar.setBackgroundColor(
+            Color.TRANSPARENT
+        )
+
         adapter = ArrayAdapter(
             this,
             android.R.layout.simple_list_item_1,
@@ -89,6 +102,17 @@ class UserProfileActivity : AppCompatActivity() {
             carregarPerfil(uid)
 
             carregarPosts(uid)
+        }
+
+        // VOLTAR
+        btnVoltar.setOnClickListener {
+
+            finish()
+
+            overridePendingTransition(
+                R.anim.slide_in_left,
+                R.anim.slide_out_right
+            )
         }
 
         // ABRIR POST
