@@ -1,6 +1,9 @@
+
 package com.example.redefp
 
 data class PostModel(
+
+    val uid: String = "",
 
     val nome: String = "",
 
@@ -12,5 +15,8 @@ data class PostModel(
 
     val horario: String = "",
 
-    val avatarId: String = "avatar_1"
+    val avatarId: String = "avatar_1",
+
+    val imagemUrl: String = ""
+
 )

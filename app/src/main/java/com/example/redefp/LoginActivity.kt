@@ -20,6 +20,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         // SPLASH SCREEN

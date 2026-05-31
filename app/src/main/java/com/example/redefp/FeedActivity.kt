@@ -3,6 +3,7 @@ package com.example.redefp
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -18,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cloudinary.android.MediaManager
+import com.cloudinary.android.callback.UploadCallback
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -52,6 +55,12 @@ class FeedActivity : AppCompatActivity() {
     // NOVOS
     private lateinit var etPost: EditText
     private lateinit var btnPostar: ImageButton
+
+    private lateinit var btnImagem: ImageButton
+
+    private var imagemSelecionada: Uri? = null
+
+    private val PICK_IMAGE = 1001
 
     private val posts = ArrayList<PostModel>()
 
@@ -123,6 +132,22 @@ class FeedActivity : AppCompatActivity() {
         btnPostar =
             findViewById(R.id.btnPostar)
 
+        btnImagem =
+            findViewById(R.id.btnImagem)
+
+        btnImagem.setOnClickListener {
+
+            val intent = Intent(
+                Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            )
+
+            startActivityForResult(
+                intent,
+                PICK_IMAGE
+            )
+        }
+
         adapter = FeedAdapter(posts)
 
         recyclerPosts.layoutManager =
@@ -146,38 +171,40 @@ class FeedActivity : AppCompatActivity() {
             val texto =
                 etPost.text.toString().trim()
 
-            if (texto.isEmpty()) {
+            val uid =
+                auth.currentUser?.uid ?: return@setOnClickListener
+
+            if (texto.isEmpty() && imagemSelecionada == null) {
 
                 Toast.makeText(
                     this,
-                    "Digite algo",
+                    "Digite algo ou selecione uma imagem",
                     Toast.LENGTH_SHORT
                 ).show()
 
                 return@setOnClickListener
             }
 
-            val uid =
-                auth.currentUser?.uid ?: return@setOnClickListener
+            if (imagemSelecionada != null) {
 
-            val post = hashMapOf(
+                uploadImagemCloudinary(imagemSelecionada!!) { imageUrl ->
 
-                "uid" to uid,
+                    val post = hashMapOf(
 
-                "nome" to "samuel",
+                        "uid" to uid,
+                        "nome" to "samuel",
+                        "texto" to texto,
+                        "imagemUrl" to imageUrl,
+                        "horario" to "Agora",
+                        "avatarId" to "ic_user"
+                    )
 
-                "texto" to texto,
-
-                "horario" to "Agora",
-
-                "avatarId" to "ic_user"
-            )
-
-            db.collection("posts")
-                .add(post)
-                .addOnSuccessListener {
+                    db.collection("posts")
+                        .add(post)
 
                     etPost.text.clear()
+
+                    imagemSelecionada = null
 
                     Toast.makeText(
                         this,
@@ -185,14 +212,30 @@ class FeedActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-                .addOnFailureListener {
 
-                    Toast.makeText(
-                        this,
-                        "Erro ao postar",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+            } else {
+
+                val post = hashMapOf(
+
+                    "uid" to uid,
+                    "nome" to "samuel",
+                    "texto" to texto,
+                    "imagemUrl" to "",
+                    "horario" to "Agora",
+                    "avatarId" to "ic_user"
+                )
+
+                db.collection("posts")
+                    .add(post)
+
+                etPost.text.clear()
+
+                Toast.makeText(
+                    this,
+                    "Postado!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
         // NOTIFICAÇÕES TOPO
@@ -365,6 +408,86 @@ class FeedActivity : AppCompatActivity() {
         if (hasFocus) {
             esconderSistema()
         }
+    }
+
+
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(
+            requestCode,
+            resultCode,
+            data
+        )
+
+        if (
+            requestCode == PICK_IMAGE &&
+            resultCode == RESULT_OK &&
+            data != null
+        ) {
+
+            imagemSelecionada = data.data
+
+            Toast.makeText(
+                this,
+                "Imagem selecionada!",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+
+    private fun uploadImagemCloudinary(
+        uri: Uri,
+        callback: (String) -> Unit
+    ) {
+
+        MediaManager.get()
+            .upload(uri)
+            .callback(object : UploadCallback {
+
+                override fun onStart(requestId: String?) {}
+
+                override fun onProgress(
+                    requestId: String?,
+                    bytes: Long,
+                    totalBytes: Long
+                ) {
+                }
+
+                override fun onSuccess(
+                    requestId: String?,
+                    resultData: MutableMap<Any?, Any?>?
+                ) {
+
+                    val url =
+                        resultData?.get("secure_url")
+                            .toString()
+
+                    callback(url)
+                }
+
+                override fun onError(
+                    requestId: String?,
+                    error: com.cloudinary.android.callback.ErrorInfo?
+                ) {
+
+                    Toast.makeText(
+                        this@FeedActivity,
+                        "Erro ao enviar imagem",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                override fun onReschedule(
+                    requestId: String?,
+                    error: com.cloudinary.android.callback.ErrorInfo?
+                ) {
+                }
+            })
+            .dispatch()
     }
 
     // VOLTAR COM ANIMAÇÃO

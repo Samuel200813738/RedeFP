@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 class FeedAdapter(
     private val listaPosts: List<PostModel>
@@ -25,6 +26,9 @@ class FeedAdapter(
 
         val imgAvatar: ImageView =
             itemView.findViewById(R.id.imgAvatar)
+
+        val imgPost: ImageView =
+            itemView.findViewById(R.id.imgPost)
     }
 
     override fun onCreateViewHolder(
@@ -66,7 +70,6 @@ class FeedAdapter(
                 context.packageName
             )
 
-        // FALLBACK
         if (avatarResource != 0) {
 
             holder.imgAvatar
@@ -78,7 +81,21 @@ class FeedAdapter(
                 .setImageResource(R.drawable.user_profile)
         }
 
-        // ANIMAÇÃO
+        if (post.imagemUrl.isNotEmpty()) {
+
+            holder.imgPost.visibility =
+                View.VISIBLE
+
+            Glide.with(holder.itemView.context)
+                .load(post.imagemUrl)
+                .into(holder.imgPost)
+
+        } else {
+
+            holder.imgPost.visibility =
+                View.GONE
+        }
+
         holder.itemView.alpha = 0f
 
         holder.itemView.animate()
