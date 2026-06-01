@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="30dp"
+    android:background="@drawable/login_bg">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Escolha o tipo de cadastro"
+        android:textColor="#FFFFFF"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="60dp"/>
+
+    <Button
+        android:id="@+id/btnEstudante"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:text="ESTUDANTE"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#001B5E"
+        android:backgroundTint="#FFD600"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"/>
+
+    <Button
+        android:id="@+id/btnSistema"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:text="SISTEMA"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#0D47A1"/>
+
+</LinearLayout>

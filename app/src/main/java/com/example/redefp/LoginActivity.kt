@@ -20,7 +20,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         // SPLASH SCREEN
@@ -99,27 +98,40 @@ class LoginActivity : AppCompatActivity() {
                                         "perfilCompleto"
                                     ) ?: false
 
-                                // PRIMEIRO LOGIN
+                                val tipo =
+                                    document.getString(
+                                        "tipo"
+                                    ) ?: "aluno"
+
                                 if (!perfilCompleto) {
 
-                                    startActivity(
-                                        Intent(
-                                            this,
-                                            SetupAvatarActivity::class.java
-                                        )
+                                    val intent = Intent(
+                                        this,
+                                        SetupAvatarActivity::class.java
                                     )
+
+                                    intent.putExtra(
+                                        "tipo",
+                                        tipo
+                                    )
+
+                                    startActivity(intent)
 
                                 } else {
 
-                                    startActivity(
-                                        Intent(
-                                            this,
-                                            FeedActivity::class.java
-                                        )
+                                    val intent = Intent(
+                                        this,
+                                        FeedActivity::class.java
                                     )
+
+                                    intent.putExtra(
+                                        "tipo",
+                                        tipo
+                                    )
+
+                                    startActivity(intent)
                                 }
 
-                                // ANIMAÇÃO
                                 overridePendingTransition(
                                     R.anim.slide_in_right,
                                     R.anim.slide_out_left
@@ -145,11 +157,10 @@ class LoginActivity : AppCompatActivity() {
             startActivity(
                 Intent(
                     this,
-                    RegisterActivity::class.java
+                    EscolhaCadastroActivity::class.java
                 )
             )
 
-            // ANIMAÇÃO
             overridePendingTransition(
                 R.anim.slide_in_right,
                 R.anim.slide_out_left

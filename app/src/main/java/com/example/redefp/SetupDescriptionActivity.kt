@@ -3,7 +3,6 @@ package com.example.redefp
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -89,29 +88,69 @@ class SetupDescriptionActivity : AppCompatActivity() {
 
             db.collection("users")
                 .document(uid)
-                .update(
-                    mapOf(
-                        "serie" to serie,
-                        "descricao" to descricao,
-                        "perfilCompleto" to true
-                    )
-                )
-                .addOnSuccessListener {
+                .get()
+                .addOnSuccessListener { document ->
 
-                    // IR PARA TELA FINAL
-                    startActivity(
-                        Intent(
-                            this,
-                            SetupFinishActivity::class.java
-                        )
-                    )
+                    val tipo =
+                        document.getString("tipo")
+                            ?: "aluno"
 
-                    overridePendingTransition(
-                        R.anim.slide_in_right,
-                        R.anim.slide_out_left
-                    )
+                    if (tipo == "professor") {
 
-                    finish()
+                        db.collection("users")
+                            .document(uid)
+                            .update(
+                                mapOf(
+                                    "disciplina" to serie,
+                                    "descricao" to descricao,
+                                    "perfilCompleto" to true
+                                )
+                            )
+                            .addOnSuccessListener {
+
+                                startActivity(
+                                    Intent(
+                                        this,
+                                        SetupFinishActivity::class.java
+                                    )
+                                )
+
+                                overridePendingTransition(
+                                    R.anim.slide_in_right,
+                                    R.anim.slide_out_left
+                                )
+
+                                finish()
+                            }
+
+                    } else {
+
+                        db.collection("users")
+                            .document(uid)
+                            .update(
+                                mapOf(
+                                    "serie" to serie,
+                                    "descricao" to descricao,
+                                    "perfilCompleto" to true
+                                )
+                            )
+                            .addOnSuccessListener {
+
+                                startActivity(
+                                    Intent(
+                                        this,
+                                        SetupFinishActivity::class.java
+                                    )
+                                )
+
+                                overridePendingTransition(
+                                    R.anim.slide_in_right,
+                                    R.anim.slide_out_left
+                                )
+
+                                finish()
+                            }
+                    }
                 }
         }
 
@@ -166,4 +205,5 @@ class SetupDescriptionActivity : AppCompatActivity() {
             R.anim.slide_out_right
         )
     }
+
 }

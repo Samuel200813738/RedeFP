@@ -13,20 +13,14 @@
         android:padding="28dp">
 
         <ImageButton
-        android:id="@+id/btnVoltar"
-
-        android:layout_width="44dp"
-        android:layout_height="44dp"
-
-        android:src="@drawable/ic_seta_voltar"
-
-        android:background="@android:color/transparent"
-
-        android:tint="#FFFFFF"
-
-        android:scaleType="fitCenter"
-
-        android:padding="4dp"/>
+            android:id="@+id/btnVoltar"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:src="@drawable/ic_seta_voltar"
+            android:background="@android:color/transparent"
+            android:tint="#FFFFFF"
+            android:scaleType="fitCenter"
+            android:padding="4dp"/>
 
         <Space
             android:layout_width="wrap_content"
@@ -41,11 +35,11 @@
             android:textSize="34sp"
             android:textStyle="bold"/>
 
-        <!-- SUB -->
+        <!-- SUBTÍTULO -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Adicione informações para que a comunidade da RedeFP conheça melhor você."
+            android:text="Complete seu perfil antes de continuar."
             android:textColor="#BDBDBD"
             android:textSize="17sp"
             android:layout_marginTop="10dp"/>
@@ -54,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="45dp"/>
 
-        <!-- SÉRIE -->
+        <!-- CAMPO DINÂMICO -->
         <EditText
             android:id="@+id/etSerie"
             android:layout_width="match_parent"

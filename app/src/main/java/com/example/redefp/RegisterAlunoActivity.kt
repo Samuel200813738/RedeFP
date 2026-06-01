@@ -6,14 +6,13 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterAlunoActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
@@ -28,13 +27,13 @@ class RegisterActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        setContentView(R.layout.activity_register)
+        setContentView(R.layout.activity_register_aluno)
 
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        val etEmail =
-            findViewById<EditText>(R.id.etEmail)
+        val etRA =
+            findViewById<EditText>(R.id.etRA)
 
         val etSenha =
             findViewById<EditText>(R.id.etSenha)
@@ -43,23 +42,10 @@ class RegisterActivity : AppCompatActivity() {
             findViewById<EditText>(R.id.etConfirmarSenha)
 
         val btnCadastrar =
-            findViewById<Button>(R.id.btnCadastrar)
+            findViewById<Button>(R.id.btnCadastrarAluno)
 
         val btnVoltar =
             findViewById<ImageButton>(R.id.btnVoltar)
-
-        val tipoCadastro =
-            intent.getStringExtra("tipo") ?: "aluno"
-
-        // ALTERA O HINT
-        if (tipoCadastro == "aluno") {
-
-            etEmail.hint = "RA"
-
-        } else {
-
-            etEmail.hint = "Email institucional"
-        }
 
         btnVoltar.setOnClickListener {
 
@@ -73,8 +59,8 @@ class RegisterActivity : AppCompatActivity() {
 
         btnCadastrar.setOnClickListener {
 
-            val login =
-                etEmail.text.toString().trim()
+            val ra =
+                etRA.text.toString().trim()
 
             val senha =
                 etSenha.text.toString().trim()
@@ -83,7 +69,7 @@ class RegisterActivity : AppCompatActivity() {
                 etConfirmarSenha.text.toString().trim()
 
             if (
-                login.isEmpty() ||
+                ra.isEmpty() ||
                 senha.isEmpty() ||
                 confirmarSenha.isEmpty()
             ) {
@@ -108,44 +94,26 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            var emailFinal = ""
-            var tipo = ""
+            if (ra.length < 5) {
 
-            if (tipoCadastro == "aluno") {
+                Toast.makeText(
+                    this,
+                    "RA inválido",
+                    Toast.LENGTH_SHORT
+                ).show()
 
-                tipo = "aluno"
-
-                emailFinal =
-                    "${login}@al.educacao.sp.gov.br"
-
-            } else {
-
-                tipo = "professor"
-
-                emailFinal = login
-
-                if (
-                    !emailFinal.endsWith(
-                        "@prof.educacao.sp.gov.br"
-                    )
-                ) {
-
-                    Toast.makeText(
-                        this,
-                        "Informe um e-mail institucional válido",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    return@setOnClickListener
-                }
+                return@setOnClickListener
             }
 
-            auth.createUserWithEmailAndPassword(
-                emailFinal,
-                senha
-            ).addOnCompleteListener {
+            val email =
+                "${ra}sp@al.educacao.sp.gov.br"
 
-                if (it.isSuccessful) {
+            auth.createUserWithEmailAndPassword(
+                email,
+                senha
+            ).addOnCompleteListener { task ->
+
+                if (task.isSuccessful) {
 
                     val uid =
                         auth.currentUser!!.uid
@@ -154,11 +122,11 @@ class RegisterActivity : AppCompatActivity() {
 
                         "uid" to uid,
 
-                        "email" to emailFinal,
+                        "ra" to ra,
 
-                        "tipo" to tipo,
+                        "email" to email,
 
-                        "ra" to login,
+                        "tipo" to "aluno",
 
                         "nome" to "",
 
@@ -196,13 +164,24 @@ class RegisterActivity : AppCompatActivity() {
 
                             finish()
                         }
+                        .addOnFailureListener {
+
+                            Toast.makeText(
+                                this,
+                                "Erro ao salvar usuário",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
 
                 } else {
 
+                    val erro =
+                        task.exception?.localizedMessage
+                            ?: "Erro ao cadastrar"
+
                     Toast.makeText(
                         this,
-                        it.exception?.message
-                            ?: "Erro ao cadastrar",
+                        erro,
                         Toast.LENGTH_LONG
                     ).show()
                 }

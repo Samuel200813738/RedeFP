@@ -30,32 +30,29 @@ class FeedActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
     private lateinit var recyclerPosts: RecyclerView
+    private var tipoUsuario = "aluno"
 
     private lateinit var navHome: LinearLayout
     private lateinit var navBuscar: LinearLayout
     private lateinit var navEu: LinearLayout
+
     private lateinit var btnNotificacao: ImageButton
 
-    // VARIÁVEIS DAS ABAS
     private lateinit var tabParaVoce: TextView
     private lateinit var tabTurmas: TextView
     private lateinit var tabTudo: TextView
     private lateinit var listaDeAbas: List<TextView>
 
-    // ÍCONES NAVBAR
     private lateinit var iconHome: ImageView
     private lateinit var iconBuscar: ImageView
     private lateinit var iconEu: ImageView
 
-    // TEXTOS NAVBAR
     private lateinit var textHome: TextView
     private lateinit var textBuscar: TextView
     private lateinit var textEu: TextView
 
-    // NOVOS
     private lateinit var etPost: EditText
     private lateinit var btnPostar: ImageButton
-
     private lateinit var btnImagem: ImageButton
 
     private var imagemSelecionada: Uri? = null
@@ -69,7 +66,6 @@ class FeedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TELA INTEIRA
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         window.statusBarColor = Color.TRANSPARENT
@@ -84,56 +80,60 @@ class FeedActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
 
-        recyclerPosts =
-            findViewById(R.id.recyclerPosts)
+        recyclerPosts = findViewById(R.id.recyclerPosts)
 
-        navHome =
-            findViewById(R.id.navHome)
+        navHome = findViewById(R.id.navHome)
+        navBuscar = findViewById(R.id.navBuscar)
+        navEu = findViewById(R.id.navEu)
 
-        navBuscar =
-            findViewById(R.id.navBuscar)
+        btnNotificacao = findViewById(R.id.btnNotificacao)
 
-        navEu =
-            findViewById(R.id.navEu)
-
-        btnNotificacao =
-            findViewById(R.id.btnNotificacao)
-
-        // INICIALIZAR ABAS
         tabParaVoce = findViewById(R.id.tabParaVoce)
         tabTurmas = findViewById(R.id.tabTurmas)
         tabTudo = findViewById(R.id.tabTudo)
-        listaDeAbas = listOf(tabParaVoce, tabTurmas, tabTudo)
 
-        // ÍCONES
-        iconHome =
-            findViewById(R.id.iconHome)
+        listaDeAbas = listOf(
+            tabParaVoce,
+            tabTurmas,
+            tabTudo
+        )
 
-        iconBuscar =
-            findViewById(R.id.iconBuscar)
+        iconHome = findViewById(R.id.iconHome)
+        iconBuscar = findViewById(R.id.iconBuscar)
+        iconEu = findViewById(R.id.iconEu)
 
-        iconEu =
-            findViewById(R.id.iconEu)
+        textHome = findViewById(R.id.textHome)
+        textBuscar = findViewById(R.id.textBuscar)
+        textEu = findViewById(R.id.textEu)
 
-        // TEXTOS
-        textHome =
-            findViewById(R.id.textHome)
+        etPost = findViewById(R.id.etPost)
+        btnPostar = findViewById(R.id.btnPostar)
+        btnImagem = findViewById(R.id.btnImagem)
 
-        textBuscar =
-            findViewById(R.id.textBuscar)
+        etPost.visibility = View.GONE
+        btnPostar.visibility = View.GONE
+        btnImagem.visibility = View.GONE
 
-        textEu =
-            findViewById(R.id.textEu)
+        val uidAtual = auth.currentUser?.uid
 
-        // NOVOS
-        etPost =
-            findViewById(R.id.etPost)
+        if (uidAtual != null) {
 
-        btnPostar =
-            findViewById(R.id.btnPostar)
+            db.collection("users")
+                .document(uidAtual)
+                .get()
+                .addOnSuccessListener { document ->
 
-        btnImagem =
-            findViewById(R.id.btnImagem)
+                    tipoUsuario =
+                        document.getString("tipo") ?: "aluno"
+
+                    if (tipoUsuario == "professor") {
+
+                        etPost.visibility = View.VISIBLE
+                        btnPostar.visibility = View.VISIBLE
+                        btnImagem.visibility = View.VISIBLE
+                    }
+                }
+        }
 
         btnImagem.setOnClickListener {
 
@@ -158,15 +158,24 @@ class FeedActivity : AppCompatActivity() {
 
         carregarPosts()
 
-        // LÓGICA DE CLIQUE NAS ABAS SUPERIORES
         listaDeAbas.forEach { aba ->
             aba.setOnClickListener {
                 atualizarEstiloAbas(it as TextView)
             }
         }
 
-        // POSTAR
         btnPostar.setOnClickListener {
+
+            if (tipoUsuario != "professor") {
+
+                Toast.makeText(
+                    this,
+                    "Somente professores podem publicar.",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                return@setOnClickListener
+            }
 
             val texto =
                 etPost.text.toString().trim()
@@ -174,7 +183,10 @@ class FeedActivity : AppCompatActivity() {
             val uid =
                 auth.currentUser?.uid ?: return@setOnClickListener
 
-            if (texto.isEmpty() && imagemSelecionada == null) {
+            if (
+                texto.isEmpty() &&
+                imagemSelecionada == null
+            ) {
 
                 Toast.makeText(
                     this,
@@ -185,60 +197,84 @@ class FeedActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if (imagemSelecionada != null) {
+            db.collection("users")
+                .document(uid)
+                .get()
+                .addOnSuccessListener { userDoc ->
 
-                uploadImagemCloudinary(imagemSelecionada!!) { imageUrl ->
+                    val nomeUsuario =
+                        userDoc.getString("nome")
+                            ?: "Professor"
 
-                    val post = hashMapOf(
+                    if (imagemSelecionada != null) {
 
-                        "uid" to uid,
-                        "nome" to "samuel",
-                        "texto" to texto,
-                        "imagemUrl" to imageUrl,
-                        "horario" to "Agora",
-                        "avatarId" to "ic_user"
-                    )
+                        uploadImagemCloudinary(
+                            imagemSelecionada!!
+                        ) { imageUrl ->
 
-                    db.collection("posts")
-                        .add(post)
+                            val post = hashMapOf(
+                                "tipo" to tipoUsuario,
+                                "uid" to uid,
+                                "nome" to nomeUsuario,
+                                "texto" to texto,
+                                "imagemUrl" to imageUrl,
+                                "horario" to "Agora",
+                                "avatarId" to "ic_user"
+                            )
 
-                    etPost.text.clear()
+                            db.collection("posts")
+                                .add(post)
 
-                    imagemSelecionada = null
+                            etPost.text.clear()
 
-                    Toast.makeText(
-                        this,
-                        "Postado!",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                            imagemSelecionada = null
+
+                            Toast.makeText(
+                                this,
+                                "Postado!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                    } else {
+
+                        val post = hashMapOf(
+                            "tipo" to tipoUsuario,
+                            "uid" to uid,
+                            "nome" to nomeUsuario,
+                            "texto" to texto,
+                            "imagemUrl" to "",
+                            "horario" to "Agora",
+                            "avatarId" to "ic_user"
+                        )
+
+                        db.collection("posts")
+                            .add(post)
+
+                        etPost.text.clear()
+
+                        Toast.makeText(
+                            this,
+                            "Postado!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
-
-            } else {
-
-                val post = hashMapOf(
-
-                    "uid" to uid,
-                    "nome" to "samuel",
-                    "texto" to texto,
-                    "imagemUrl" to "",
-                    "horario" to "Agora",
-                    "avatarId" to "ic_user"
-                )
-
-                db.collection("posts")
-                    .add(post)
-
-                etPost.text.clear()
-
-                Toast.makeText(
-                    this,
-                    "Postado!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
         }
 
-        // NOTIFICAÇÕES TOPO
+        btnNotificacao.setOnClickListener {
+
+            Toast.makeText(
+                this,
+                "Notificações em breve",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+
+
+
+// NOTIFICAÇÕES TOPO
         btnNotificacao.setOnClickListener {
 
             Toast.makeText(
@@ -259,7 +295,7 @@ class FeedActivity : AppCompatActivity() {
             textEu.setTextColor(Color.WHITE)
         }
 
-        // HOME
+// HOME
         navHome.setOnClickListener {
 
             resetIcons()
@@ -275,7 +311,7 @@ class FeedActivity : AppCompatActivity() {
             recyclerPosts.smoothScrollToPosition(0)
         }
 
-        // BUSCAR
+// BUSCAR
         navBuscar.setOnClickListener {
 
             resetIcons()
@@ -301,7 +337,7 @@ class FeedActivity : AppCompatActivity() {
             )
         }
 
-        // PERFIL
+// PERFIL
         navEu.setOnClickListener {
 
             resetIcons()
@@ -331,21 +367,43 @@ class FeedActivity : AppCompatActivity() {
                 R.anim.slide_out_left
             )
         }
-    }
 
-    // FUNÇÃO PARA ATUALIZAR O VISUAL DAS ABAS (PARA VOCÊ, TURMAS, TUDO)
-    private fun atualizarEstiloAbas(abaSelecionada: TextView) {
+    } // FECHA onCreate()
+
+    // FUNÇÃO PARA ATUALIZAR O VISUAL DAS ABAS
+    private fun atualizarEstiloAbas(
+        abaSelecionada: TextView
+    ) {
+
         listaDeAbas.forEach { aba ->
+
             if (aba == abaSelecionada) {
-                // Estilo Ativo: Amarelo, Negrito e Fundo Selecionado
-                aba.setTextColor(Color.parseColor("#FFD600"))
-                aba.setTypeface(null, Typeface.BOLD)
-                aba.setBackgroundResource(R.drawable.tab_selected_bg)
+
+                aba.setTextColor(
+                    Color.parseColor("#FFD600")
+                )
+
+                aba.setTypeface(
+                    null,
+                    Typeface.BOLD
+                )
+
+                aba.setBackgroundResource(
+                    R.drawable.tab_selected_bg
+                )
+
             } else {
-                // Estilo Inativo: Branco, Normal e Sem Fundo
+
                 aba.setTextColor(Color.WHITE)
-                aba.setTypeface(null, Typeface.NORMAL)
-                aba.setBackgroundResource(android.R.color.transparent)
+
+                aba.setTypeface(
+                    null,
+                    Typeface.NORMAL
+                )
+
+                aba.setBackgroundResource(
+                    android.R.color.transparent
+                )
             }
         }
     }
@@ -364,10 +422,11 @@ class FeedActivity : AppCompatActivity() {
                 value?.documents?.forEach {
 
                     val post =
-                        it.toObject(PostModel::class.java)
+                        it.toObject(
+                            PostModel::class.java
+                        )
 
                     if (post != null) {
-
                         posts.add(post)
                     }
                 }
@@ -394,22 +453,22 @@ class FeedActivity : AppCompatActivity() {
         } else {
 
             @Suppress("DEPRECATION")
-            window.decorView.systemUiVisibility = (
-                    View.SYSTEM_UI_FLAG_FULLSCREEN
-                            or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    )
+            window.decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_FULLSCREEN or
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
         }
     }
 
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
+    override fun onWindowFocusChanged(
+        hasFocus: Boolean
+    ) {
         super.onWindowFocusChanged(hasFocus)
 
         if (hasFocus) {
             esconderSistema()
         }
     }
-
 
     override fun onActivityResult(
         requestCode: Int,
@@ -438,7 +497,6 @@ class FeedActivity : AppCompatActivity() {
         }
     }
 
-
     private fun uploadImagemCloudinary(
         uri: Uri,
         callback: (String) -> Unit
@@ -448,7 +506,9 @@ class FeedActivity : AppCompatActivity() {
             .upload(uri)
             .callback(object : UploadCallback {
 
-                override fun onStart(requestId: String?) {}
+                override fun onStart(
+                    requestId: String?
+                ) {}
 
                 override fun onProgress(
                     requestId: String?,
@@ -499,4 +559,5 @@ class FeedActivity : AppCompatActivity() {
             R.anim.slide_out_right
         )
     }
-}
+
+} // FECHA FeedActivity
