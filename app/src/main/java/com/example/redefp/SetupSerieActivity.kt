@@ -6,16 +6,14 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class SetupDescriptionActivity : AppCompatActivity() {
-
+class SetupSerieActivity : AppCompatActivity() {
 
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
@@ -30,17 +28,19 @@ class SetupDescriptionActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        setContentView(
-            R.layout.activity_setup_description
-        )
-
-        esconderSistema()
+        setContentView(R.layout.activity_setup_serie)
 
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
 
-        val etDescricao =
-            findViewById<EditText>(R.id.etDescricao)
+        val tvTitulo =
+            findViewById<TextView>(R.id.tvTitulo)
+
+        val tvSubtitulo =
+            findViewById<TextView>(R.id.tvSubtitulo)
+
+        val etCampo =
+            findViewById<EditText>(R.id.etCampo)
 
         val btnContinuar =
             findViewById<Button>(R.id.btnContinuar)
@@ -48,24 +48,42 @@ class SetupDescriptionActivity : AppCompatActivity() {
         val btnVoltar =
             findViewById<ImageButton>(R.id.btnVoltar)
 
-        btnVoltar.setImageResource(
-            R.drawable.ic_seta_voltar
-        )
+        val tipo =
+            intent.getStringExtra("tipo") ?: "aluno"
 
-        btnVoltar.setBackgroundColor(
-            Color.TRANSPARENT
-        )
+        if (tipo == "professor") {
+
+            tvTitulo.text =
+                "Qual sua disciplina ou cargo?"
+
+            tvSubtitulo.text =
+                "Informe sua disciplina ou função."
+
+            etCampo.hint =
+                "Informática"
+
+        } else {
+
+            tvTitulo.text =
+                "Qual sua série?"
+
+            tvSubtitulo.text =
+                "Informe sua série."
+
+            etCampo.hint =
+                "3°A"
+        }
 
         btnContinuar.setOnClickListener {
 
-            val descricao =
-                etDescricao.text.toString().trim()
+            val valor =
+                etCampo.text.toString().trim()
 
-            if (descricao.isEmpty()) {
+            if (valor.isEmpty()) {
 
                 Toast.makeText(
                     this,
-                    "Digite uma descrição",
+                    "Preencha o campo",
                     Toast.LENGTH_SHORT
                 ).show()
 
@@ -75,22 +93,29 @@ class SetupDescriptionActivity : AppCompatActivity() {
             val uid =
                 auth.currentUser!!.uid
 
+            val campo =
+                if (tipo == "professor")
+                    "disciplina"
+                else
+                    "serie"
+
             db.collection("users")
                 .document(uid)
-                .update(
-                    mapOf(
-                        "descricao" to descricao,
-                        "perfilCompleto" to true
-                    )
-                )
+                .update(campo, valor)
                 .addOnSuccessListener {
 
-                    startActivity(
+                    val intent =
                         Intent(
                             this,
-                            SetupFinishActivity::class.java
+                            SetupDescriptionActivity::class.java
                         )
+
+                    intent.putExtra(
+                        "tipo",
+                        tipo
                     )
+
+                    startActivity(intent)
 
                     overridePendingTransition(
                         R.anim.slide_in_right,
@@ -98,14 +123,6 @@ class SetupDescriptionActivity : AppCompatActivity() {
                     )
 
                     finish()
-                }
-                .addOnFailureListener {
-
-                    Toast.makeText(
-                        this,
-                        "Erro ao salvar descrição",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
         }
 
@@ -118,38 +135,6 @@ class SetupDescriptionActivity : AppCompatActivity() {
                 R.anim.slide_out_right
             )
         }
-    }
-
-    private fun esconderSistema() {
-
-        val controller = WindowInsetsControllerCompat(
-            window,
-            window.decorView
-        )
-
-        controller.hide(
-            WindowInsetsCompat.Type.systemBars()
-        )
-
-        controller.systemBarsBehavior =
-            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-    }
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-
-        if (hasFocus) {
-            esconderSistema()
-        }
-    }
-
-    override fun finish() {
-        super.finish()
-
-        overridePendingTransition(
-            R.anim.slide_in_left,
-            R.anim.slide_out_right
-        )
     }
 
 }

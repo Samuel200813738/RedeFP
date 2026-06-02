@@ -22,7 +22,6 @@ class SetupNameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TELA INTEIRA
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         window.statusBarColor = Color.TRANSPARENT
@@ -48,7 +47,6 @@ class SetupNameActivity : AppCompatActivity() {
         val btnVoltar =
             findViewById<ImageButton>(R.id.btnVoltar)
 
-        // NOVA SETA
         btnVoltar.setImageResource(
             R.drawable.ic_seta_voltar
         )
@@ -57,7 +55,6 @@ class SetupNameActivity : AppCompatActivity() {
             Color.TRANSPARENT
         )
 
-        // CONTINUAR
         btnContinuar.setOnClickListener {
 
             val nome =
@@ -85,19 +82,34 @@ class SetupNameActivity : AppCompatActivity() {
                 )
                 .addOnSuccessListener {
 
-                    startActivity(
-                        Intent(
-                            this,
-                            SetupDescriptionActivity::class.java
-                        )
-                    )
+                    db.collection("users")
+                        .document(uid)
+                        .get()
+                        .addOnSuccessListener { document ->
 
-                    overridePendingTransition(
-                        R.anim.slide_in_right,
-                        R.anim.slide_out_left
-                    )
+                            val tipo =
+                                document.getString("tipo")
+                                    ?: "aluno"
 
-                    finish()
+                            val intent = Intent(
+                                this,
+                                SetupSerieActivity::class.java
+                            )
+
+                            intent.putExtra(
+                                "tipo",
+                                tipo
+                            )
+
+                            startActivity(intent)
+
+                            overridePendingTransition(
+                                R.anim.slide_in_right,
+                                R.anim.slide_out_left
+                            )
+
+                            finish()
+                        }
                 }
                 .addOnFailureListener {
 
@@ -109,7 +121,6 @@ class SetupNameActivity : AppCompatActivity() {
                 }
         }
 
-        // VOLTAR
         btnVoltar.setOnClickListener {
 
             startActivity(
@@ -128,7 +139,6 @@ class SetupNameActivity : AppCompatActivity() {
         }
     }
 
-    // ESCONDER BARRAS
     private fun esconderSistema() {
 
         val controller = WindowInsetsControllerCompat(
@@ -151,4 +161,5 @@ class SetupNameActivity : AppCompatActivity() {
             esconderSistema()
         }
     }
+
 }

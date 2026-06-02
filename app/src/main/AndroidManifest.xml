@@ -15,89 +15,67 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RedeFP"
         tools:targetApi="31">
-
+        <activity
+            android:name=".SetupSerieActivity"
+            android:exported="false" />
         <activity
             android:name=".RegisterProfessorActivity"
             android:exported="false" />
-
         <activity
             android:name=".RegisterAlunoActivity"
             android:exported="false" />
-
         <activity
             android:name=".EscolhaCadastroActivity"
-            android:exported="false" />
-
-        <!-- LOGIN -->
+            android:exported="false" /> <!-- LOGIN -->
         <activity
             android:name=".LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.RedeFP.Splash">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-        </activity>
-
-        <!-- FEED -->
+        </activity> <!-- FEED -->
         <activity
             android:name=".FeedActivity"
-            android:exported="false" />
-
-        <!-- CADASTRO ANTIGO -->
+            android:exported="false" /> <!-- CADASTRO ANTIGO -->
         <activity
             android:name=".RegisterActivity"
-            android:exported="false" />
-
-        <!-- ONBOARDING -->
+            android:exported="false" /> <!-- ONBOARDING -->
         <activity
             android:name=".SetupAvatarActivity"
             android:exported="false" />
-
         <activity
             android:name=".SetupNameActivity"
             android:exported="false" />
-
         <activity
             android:name=".SetupDescriptionActivity"
             android:exported="false" />
-
         <activity
             android:name=".SetupFinishActivity"
-            android:exported="false" />
-
-        <!-- OUTRAS TELAS -->
+            android:exported="false" /> <!-- OUTRAS TELAS -->
         <activity
             android:name=".GroupsActivity"
             android:exported="false" />
-
         <activity
             android:name=".GroupFeedActivity"
             android:exported="false" />
-
         <activity
             android:name=".EditProfileActivity"
             android:exported="false" />
-
         <activity
             android:name=".UserProfileActivity"
             android:exported="false" />
-
         <activity
             android:name=".RequestsActivity"
             android:exported="false" />
-
         <activity
             android:name=".UsersActivity"
             android:exported="false" />
-
         <activity
             android:name=".MainActivity"
             android:exported="false" />
-
     </application>
 
 </manifest>

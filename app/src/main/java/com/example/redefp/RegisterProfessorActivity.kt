@@ -141,7 +141,7 @@ class RegisterProfessorActivity : AppCompatActivity() {
 
                         "nome" to "",
 
-                        "serie" to "",
+                        "disciplina" to "",
 
                         "descricao" to "",
 

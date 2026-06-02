@@ -68,6 +68,17 @@ class RegisterAlunoActivity : AppCompatActivity() {
             val confirmarSenha =
                 etConfirmarSenha.text.toString().trim()
 
+            if (!ra.matches(Regex("\\d{14}"))) {
+
+                Toast.makeText(
+                    this,
+                    "O RA deve conter exatamente 14 números",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                return@setOnClickListener
+            }
+
             if (
                 ra.isEmpty() ||
                 senha.isEmpty() ||

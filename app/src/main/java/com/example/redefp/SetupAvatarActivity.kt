@@ -102,18 +102,36 @@ class SetupAvatarActivity : AppCompatActivity() {
                     "avatarId",
                     avatarSelecionado
                 )
+                .addOnSuccessListener {
 
-            startActivity(
-                Intent(
-                    this,
-                    SetupNameActivity::class.java
-                )
-            )
+                    db.collection("users")
+                        .document(uid)
+                        .get()
+                        .addOnSuccessListener { document ->
 
-            overridePendingTransition(
-                R.anim.slide_in_right,
-                R.anim.slide_out_left
-            )
+                            val tipo =
+                                document.getString("tipo")
+                                    ?: "aluno"
+
+                            val intent = Intent(
+                                this,
+                                SetupNameActivity::class.java
+                            )
+
+                            intent.putExtra(
+                                "tipo",
+                                tipo
+                            )
+
+                            startActivity(intent)
+
+                            overridePendingTransition(
+                                R.anim.slide_in_right,
+                                R.anim.slide_out_left
+                            )
+                        }
+                }
+
         }
 
         // VOLTAR
@@ -133,7 +151,8 @@ class SetupAvatarActivity : AppCompatActivity() {
 
             finish()
         }
-    }
+
+    } // <- FECHA O onCreate()
 
     // ESCONDER BARRAS
     private fun esconderSistema() {
@@ -167,4 +186,5 @@ class SetupAvatarActivity : AppCompatActivity() {
             R.anim.slide_out_right
         )
     }
+
 }

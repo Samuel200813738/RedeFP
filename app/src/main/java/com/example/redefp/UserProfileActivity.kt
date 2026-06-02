@@ -27,6 +27,7 @@ class UserProfileActivity : AppCompatActivity() {
 
     private lateinit var adapter: ArrayAdapter<String>
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -142,22 +143,45 @@ class UserProfileActivity : AppCompatActivity() {
                 val nome =
                     document.getString("nome")
 
-                val turma =
-                    document.getString("turma")
+                val serie =
+                    document.getString("serie")
 
                 val descricao =
                     document.getString("descricao")
 
+                val tipo =
+                    document.getString("tipo")
+
+                val disciplina =
+                    document.getString("disciplina")
+
                 tvNome.text =
                     nome ?: "Usuário"
 
-                tvTurma.text =
-                    "Turma: ${turma ?: "Não informada"}"
+                if (tipo == "professor") {
+
+                    tvTurma.visibility =
+                        android.view.View.VISIBLE
+
+                    tvTurma.text =
+                        disciplina ?: "Disciplina não informada"
+
+                } else {
+
+                    tvTurma.visibility =
+                        android.view.View.VISIBLE
+
+                    tvTurma.text =
+                        serie ?: "Série não informada"
+                }
 
                 tvDescricao.text =
                     descricao ?: "Sem descrição"
             }
+
+
     }
+
 
     private fun carregarPosts(uid: String) {
 
