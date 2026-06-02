@@ -57,25 +57,25 @@ class LoginActivity : AppCompatActivity() {
         // LOGIN
         btnLogin.setOnClickListener {
 
+            val login =
+                etEmail.text.toString().trim()
+
             val email =
                 etEmail.text.toString().trim()
 
-            val senha =
-                etSenha.text.toString().trim()
-
-            if (
-                email.isEmpty() ||
-                senha.isEmpty()
-            ) {
+            if (email.matches(Regex("\\d{14}"))) {
 
                 Toast.makeText(
                     this,
-                    "Preencha todos os campos",
-                    Toast.LENGTH_SHORT
+                    "Digite o RA completo com sp@al.educacao.sp.gov.br",
+                    Toast.LENGTH_LONG
                 ).show()
 
                 return@setOnClickListener
             }
+
+            val senha =
+                etSenha.text.toString().trim()
 
             auth.signInWithEmailAndPassword(
                 email,

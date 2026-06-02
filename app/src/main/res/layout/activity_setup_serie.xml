@@ -55,6 +55,10 @@
             android:hint="3°A"
             android:textColor="#FFFFFF"
             android:textColorHint="#9E9E9E"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:inputType="text"
+            android:imeOptions="actionDone"
             android:background="@drawable/input_bg"
             android:paddingHorizontal="20dp"/>
 

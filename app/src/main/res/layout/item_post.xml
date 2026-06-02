@@ -19,7 +19,7 @@
     android:outlineProvider="background"
     android:clipToOutline="true">
 
-
+    <!-- EFEITO AMARELO -->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="90dp"
@@ -123,22 +123,28 @@
 
                     android:lineSpacingExtra="1dp"/>
 
-                <!-- IMAGEM DO POST -->
-                <ImageView
-                    android:id="@+id/imgPost"
-
-                    android:layout_width="match_parent"
-                    android:layout_height="220dp"
-
-                    android:layout_marginTop="8dp"
-
-                    android:scaleType="centerCrop"
-
-                    android:visibility="gone" />
-
             </LinearLayout>
 
         </LinearLayout>
+
+        <!-- FOTO -->
+        <!-- FOTO -->
+        <ImageView
+            android:id="@+id/imgPost"
+
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+
+            android:scaleType="centerCrop"
+
+            android:adjustViewBounds="true"
+
+            android:visibility="gone"/>
 
         <!-- AÇÕES -->
         <LinearLayout
@@ -147,7 +153,7 @@
 
             android:orientation="horizontal"
 
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="6dp"
 
             android:paddingStart="34dp">
 
