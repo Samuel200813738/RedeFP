@@ -6,6 +6,7 @@ import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.widget.Button
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
@@ -13,6 +14,8 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.appcompat.app.AlertDialog
+import com.bumptech.glide.Glide
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -148,7 +151,10 @@ class FeedActivity : AppCompatActivity() {
             )
         }
 
-        adapter = FeedAdapter(posts)
+        adapter = FeedAdapter(posts) { post ->
+
+            mostrarPopup(post)
+        }
 
         recyclerPosts.layoutManager =
             LinearLayoutManager(this)
@@ -369,6 +375,76 @@ class FeedActivity : AppCompatActivity() {
         }
 
     } // FECHA onCreate()
+
+    private fun mostrarPopup(post: PostModel) {
+
+        val view = layoutInflater.inflate(
+            R.layout.dialog_post,
+            null
+        )
+
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(this)
+            .setView(view)
+            .create()
+
+        val avatar =
+            view.findViewById<ImageView>(R.id.dialogAvatar)
+
+        val nome =
+            view.findViewById<TextView>(R.id.dialogNome)
+
+        val horario =
+            view.findViewById<TextView>(R.id.dialogHorario)
+
+        val texto =
+            view.findViewById<TextView>(R.id.dialogTexto)
+
+        val imagem =
+            view.findViewById<ImageView>(R.id.dialogImagem)
+
+        nome.text = post.nome
+
+        horario.text = post.horario
+
+        texto.text = post.texto
+
+        val avatarRes =
+            resources.getIdentifier(
+                post.avatarId,
+                "drawable",
+                packageName
+            )
+
+        if (avatarRes != 0) {
+
+            avatar.setImageResource(avatarRes)
+
+        } else {
+
+            avatar.setImageResource(
+                R.drawable.user_profile
+            )
+        }
+
+        if (post.imagemUrl.isNotEmpty()) {
+
+            imagem.visibility = View.VISIBLE
+
+            Glide.with(this)
+                .load(post.imagemUrl)
+                .into(imagem)
+
+        } else {
+
+            imagem.visibility = View.GONE
+        }
+
+        dialog.show()
+
+        dialog.window?.setBackgroundDrawableResource(
+            android.R.color.transparent
+        )
+    }
 
     // FUNÇÃO PARA ATUALIZAR O VISUAL DAS ABAS
     private fun atualizarEstiloAbas(

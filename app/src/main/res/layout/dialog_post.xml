@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical"
+
+        android:padding="16dp"
+
+        android:background="@drawable/post_card_bg">
+
+        <ImageView
+            android:id="@+id/dialogAvatar"
+
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+
+            android:background="@drawable/input_bg"
+
+            android:padding="6dp"
+
+            android:src="@drawable/user_profile"/>
+
+        <TextView
+            android:id="@+id/dialogNome"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="8dp"
+
+            android:textColor="#FFFFFF"
+
+            android:textStyle="bold"
+
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/dialogHorario"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textColor="#8FA3BF"
+
+            android:textSize="11sp"/>
+
+        <ImageView
+            android:id="@+id/dialogImagem"
+
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+
+            android:layout_marginTop="12dp"
+
+            android:scaleType="fitCenter"
+
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/dialogTexto"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="12dp"
+
+            android:textColor="#FFFFFF"
+
+            android:textSize="17sp"/>
+    </LinearLayout>
+
+</ScrollView>

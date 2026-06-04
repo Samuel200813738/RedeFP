@@ -59,7 +59,14 @@ class GroupFeedActivity : AppCompatActivity() {
         recyclerAvisos =
             findViewById(R.id.recyclerAvisos)
 
-        adapter = FeedAdapter(posts)
+        adapter = FeedAdapter(posts) { post ->
+
+            Toast.makeText(
+                this,
+                post.texto,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
 
         recyclerAvisos.layoutManager =
             LinearLayoutManager(this)

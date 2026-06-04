@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 class FeedAdapter(
-    private val listaPosts: List<PostModel>
+    private val listaPosts: List<PostModel>,
+    private val onPostClick: (PostModel) -> Unit
 ) : RecyclerView.Adapter<FeedAdapter.PostViewHolder>() {
 
     class PostViewHolder(itemView: View)
+
         : RecyclerView.ViewHolder(itemView) {
 
         val tvNome: TextView =
@@ -104,6 +106,12 @@ class FeedAdapter(
                 .clear(holder.imgPost)
 
             holder.imgPost.setImageDrawable(null)
+        }
+
+        // CLIQUE NO CARD
+        holder.itemView.setOnClickListener {
+
+            onPostClick(post)
         }
 
         // ANIMAÇÃO
