@@ -43,17 +43,7 @@ class UsersActivity : AppCompatActivity() {
 
         listUsers = findViewById(R.id.listUsers)
 
-        val btnVoltar =
-            findViewById<ImageButton>(R.id.btnVoltar)
 
-        // NOVA SETA
-        btnVoltar.setImageResource(
-            R.drawable.ic_seta_voltar
-        )
-
-        btnVoltar.setBackgroundColor(
-            Color.TRANSPARENT
-        )
 
         adapter = ArrayAdapter(
             this,
@@ -74,16 +64,6 @@ class UsersActivity : AppCompatActivity() {
 
         carregarUsuarios()
 
-        // VOLTAR
-        btnVoltar.setOnClickListener {
-
-            finish()
-
-            overridePendingTransition(
-                R.anim.slide_in_left,
-                R.anim.slide_out_right
-            )
-        }
 
         // ABRIR PERFIL
         listUsers.setOnItemClickListener { _, _, position, _ ->
