@@ -33,6 +33,35 @@ class FeedAdapter(
             itemView.findViewById(R.id.imgPost)
     }
 
+    private fun formatarData(timestamp: Long): String {
+
+        val agora = System.currentTimeMillis()
+
+        val diff = agora - timestamp
+
+        val umDia = 24 * 60 * 60 * 1000
+        val doisDias = 2 * umDia
+
+        return when {
+
+            timestamp == 0L -> "Agora"
+
+            diff < umDia -> "Hoje"
+
+            diff < doisDias -> "Ontem"
+
+            else -> {
+                val sdf = java.text.SimpleDateFormat(
+                    "dd/MM",
+                    java.util.Locale.getDefault()
+                )
+                sdf.format(java.util.Date(timestamp))
+            }
+        }
+
+    }
+
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -59,7 +88,7 @@ class FeedAdapter(
             post.nome
 
         holder.tvHorario.text =
-            "• ${post.horario}"
+            "• ${formatarData(post.timestamp)}"
 
         holder.tvTexto.text =
             post.texto

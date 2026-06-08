@@ -17,6 +17,8 @@ data class PostModel(
 
     val avatarId: String = "avatar_1",
 
-    val imagemUrl: String = ""
+    val imagemUrl: String = "",
+
+    val timestamp: Long = 0L
 
 )

@@ -24,6 +24,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.UploadCallback
+import android.view.GestureDetector
+import android.view.MotionEvent
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -62,9 +64,40 @@ class FeedActivity : AppCompatActivity() {
 
     private val PICK_IMAGE = 1001
 
-    private val posts = ArrayList<PostModel>()
+    private val postsParaVoce = ArrayList<PostModel>()
+
+    private val postsTodos = ArrayList<PostModel>()
+
+    private val postsTurmas = ArrayList<PostModel>()
 
     private lateinit var adapter: FeedAdapter
+
+    private var abaAtual = 0
+
+    private lateinit var gestureDetector: GestureDetector
+
+    private fun migrarPostsAntigos() {
+
+        db.collection("posts")
+            .get()
+            .addOnSuccessListener { result ->
+
+                result.documents.forEach { doc ->
+
+                    val timestampAtual =
+                        doc.getLong("timestamp")
+
+                    if (timestampAtual == null) {
+
+                        doc.reference.update(
+                            "timestamp",
+                            System.currentTimeMillis()
+                        )
+                    }
+                }
+            }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +115,8 @@ class FeedActivity : AppCompatActivity() {
 
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
+
+        migrarPostsAntigos()
 
         recyclerPosts = findViewById(R.id.recyclerPosts)
 
@@ -151,7 +186,7 @@ class FeedActivity : AppCompatActivity() {
             )
         }
 
-        adapter = FeedAdapter(posts) { post ->
+        adapter = FeedAdapter(postsParaVoce) { post ->
 
             mostrarPopup(post)
         }
@@ -164,10 +199,77 @@ class FeedActivity : AppCompatActivity() {
 
         carregarPosts()
 
-        listaDeAbas.forEach { aba ->
-            aba.setOnClickListener {
-                atualizarEstiloAbas(it as TextView)
+
+
+        gestureDetector = GestureDetector(
+            this,
+            object : GestureDetector.SimpleOnGestureListener() {
+
+                override fun onFling(
+                    e1: MotionEvent?,
+                    e2: MotionEvent,
+                    velocityX: Float,
+                    velocityY: Float
+                ): Boolean {
+
+                    val deltaX =
+                        e2.x - (e1?.x ?: 0f)
+
+                    if (kotlin.math.abs(deltaX) > 150) {
+
+                        if (deltaX < 0) {
+
+                            if (abaAtual < 2) {
+
+                                abaAtual++
+
+                                selecionarAbaAtual()
+                            }
+
+                        } else {
+
+                            if (abaAtual > 0) {
+
+                                abaAtual--
+
+                                selecionarAbaAtual()
+                            }
+                        }
+
+                        return true
+                    }
+
+                    return false
+                }
             }
+        )
+
+        recyclerPosts.setOnTouchListener { _, event ->
+
+            gestureDetector.onTouchEvent(event)
+
+            false
+        }
+
+        tabParaVoce.setOnClickListener {
+
+            abaAtual = 0
+
+            selecionarAbaAtual()
+        }
+
+        tabTurmas.setOnClickListener {
+
+            abaAtual = 1
+
+            selecionarAbaAtual()
+        }
+
+        tabTudo.setOnClickListener {
+
+            abaAtual = 2
+
+            selecionarAbaAtual()
         }
 
         btnPostar.setOnClickListener {
@@ -219,13 +321,16 @@ class FeedActivity : AppCompatActivity() {
                         ) { imageUrl ->
 
                             val post = hashMapOf(
+
                                 "tipo" to tipoUsuario,
                                 "uid" to uid,
                                 "nome" to nomeUsuario,
                                 "texto" to texto,
                                 "imagemUrl" to imageUrl,
                                 "horario" to "Agora",
-                                "avatarId" to "ic_user"
+                                "avatarId" to "ic_user",
+
+                                "timestamp" to System.currentTimeMillis()
                             )
 
                             db.collection("posts")
@@ -415,6 +520,110 @@ class FeedActivity : AppCompatActivity() {
         }
     }
 
+    private fun trocarAba(indice: Int) {
+
+        abaAtual = indice
+
+        when (indice) {
+
+            0 -> {
+
+                adapter = FeedAdapter(postsParaVoce) { post ->
+
+                    mostrarPopup(post)
+                }
+
+                recyclerPosts.adapter = adapter
+            }
+
+            1 -> {
+
+                adapter = FeedAdapter(postsTurmas) { post ->
+
+                    mostrarPopup(post)
+                }
+
+                recyclerPosts.adapter = adapter
+            }
+
+            2 -> {
+
+                adapter = FeedAdapter(postsTodos) { post ->
+
+                    mostrarPopup(post)
+                }
+
+                recyclerPosts.adapter = adapter
+            }
+        }
+
+        adapter.notifyDataSetChanged()
+
+    }
+
+    private fun selecionarAbaAtual() {
+
+        when (abaAtual) {
+
+            0 -> {
+
+                atualizarEstiloAbas(
+                    tabParaVoce
+                )
+
+                trocarAba(0)
+            }
+
+            1 -> {
+
+                atualizarEstiloAbas(
+                    tabTurmas
+                )
+
+                trocarAba(1)
+            }
+
+            2 -> {
+
+                atualizarEstiloAbas(
+                    tabTudo
+                )
+
+                trocarAba(2)
+            }
+        }
+
+    }
+
+    private fun formatarData(timestamp: Long): String {
+
+        val agora = System.currentTimeMillis()
+
+        val diff = agora - timestamp
+
+        val umDia = 24 * 60 * 60 * 1000
+        val doisDias = 2 * umDia
+
+        return when {
+
+            timestamp == 0L -> "Agora"
+
+            diff < umDia -> "Hoje"
+
+            diff < doisDias -> "Ontem"
+
+            else -> {
+                val sdf = java.text.SimpleDateFormat(
+                    "dd/MM",
+                    java.util.Locale.getDefault()
+                )
+                sdf.format(java.util.Date(timestamp))
+            }
+        }
+
+    }
+
+
     private fun carregarPosts() {
 
         db.collection("posts")
@@ -424,25 +633,62 @@ class FeedActivity : AppCompatActivity() {
                     return@addSnapshotListener
                 }
 
-                posts.clear()
+                postsParaVoce.clear()
+                postsTodos.clear()
 
-                value?.documents?.forEach {
+                val agora = System.currentTimeMillis()
+
+                val seteDias =
+                    7L * 24 * 60 * 60 * 1000
+
+                val trintaDias =
+                    30L * 24 * 60 * 60 * 1000
+
+                value?.documents?.forEach { document ->
 
                     val post =
-                        it.toObject(
-                            PostModel::class.java
-                        )
+                        document.toObject(PostModel::class.java)
 
                     if (post != null) {
-                        posts.add(post)
+
+                        val timestamp =
+                            post.timestamp
+
+                        // POSTS LEGADOS (SEM TIMESTAMP)
+                        if (timestamp == 0L) {
+
+                            postsParaVoce.add(post)
+                            postsTodos.add(post)
+
+                        } else {
+
+                            val idade =
+                                agora - timestamp
+
+                            // PARA VOCÊ (7 DIAS)
+                            if (idade <= seteDias) {
+                                postsParaVoce.add(post)
+                            }
+
+                            // TODOS (30 DIAS)
+                            if (idade <= trintaDias) {
+                                postsTodos.add(post)
+                            }
+                        }
                     }
                 }
 
-                posts.reverse()
+                // ordem: mais recentes primeiro
+                postsParaVoce.reverse()
+                postsTodos.reverse()
 
                 adapter.notifyDataSetChanged()
             }
+
     }
+
+
+
 
     private fun mostrarPopup(post: PostModel) {
 
@@ -515,7 +761,9 @@ class FeedActivity : AppCompatActivity() {
             .create()
 
         dialog.show()
+
     }
+
 
     // ESCONDER BARRAS
     private fun esconderSistema() {
@@ -639,5 +887,12 @@ class FeedActivity : AppCompatActivity() {
             R.anim.slide_out_right
         )
     }
+    override fun dispatchTouchEvent(
+        ev: MotionEvent
+    ): Boolean {
 
+        gestureDetector.onTouchEvent(ev)
+
+        return super.dispatchTouchEvent(ev)
+    }
 } // FECHA FeedActivity
