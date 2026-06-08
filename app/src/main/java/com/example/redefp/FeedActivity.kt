@@ -376,75 +376,6 @@ class FeedActivity : AppCompatActivity() {
 
     } // FECHA onCreate()
 
-    private fun mostrarPopup(post: PostModel) {
-
-        val view = layoutInflater.inflate(
-            R.layout.dialog_post,
-            null
-        )
-
-        val dialog = androidx.appcompat.app.AlertDialog.Builder(this)
-            .setView(view)
-            .create()
-
-        val avatar =
-            view.findViewById<ImageView>(R.id.dialogAvatar)
-
-        val nome =
-            view.findViewById<TextView>(R.id.dialogNome)
-
-        val horario =
-            view.findViewById<TextView>(R.id.dialogHorario)
-
-        val texto =
-            view.findViewById<TextView>(R.id.dialogTexto)
-
-        val imagem =
-            view.findViewById<ImageView>(R.id.dialogImagem)
-
-        nome.text = post.nome
-
-        horario.text = post.horario
-
-        texto.text = post.texto
-
-        val avatarRes =
-            resources.getIdentifier(
-                post.avatarId,
-                "drawable",
-                packageName
-            )
-
-        if (avatarRes != 0) {
-
-            avatar.setImageResource(avatarRes)
-
-        } else {
-
-            avatar.setImageResource(
-                R.drawable.user_profile
-            )
-        }
-
-        if (post.imagemUrl.isNotEmpty()) {
-
-            imagem.visibility = View.VISIBLE
-
-            Glide.with(this)
-                .load(post.imagemUrl)
-                .into(imagem)
-
-        } else {
-
-            imagem.visibility = View.GONE
-        }
-
-        dialog.show()
-
-        dialog.window?.setBackgroundDrawableResource(
-            android.R.color.transparent
-        )
-    }
 
     // FUNÇÃO PARA ATUALIZAR O VISUAL DAS ABAS
     private fun atualizarEstiloAbas(
@@ -511,6 +442,79 @@ class FeedActivity : AppCompatActivity() {
 
                 adapter.notifyDataSetChanged()
             }
+    }
+
+    private fun mostrarPopup(post: PostModel) {
+
+        val view = layoutInflater.inflate(
+            R.layout.item_post,
+            null
+        )
+
+        val tvNome =
+            view.findViewById<TextView>(R.id.tvNome)
+
+        val tvHorario =
+            view.findViewById<TextView>(R.id.tvHorario)
+
+        val tvTexto =
+            view.findViewById<TextView>(R.id.tvTexto)
+
+        val imgAvatar =
+            view.findViewById<ImageView>(R.id.imgAvatar)
+
+        val imgPost =
+            view.findViewById<ImageView>(R.id.imgPost)
+
+        tvNome.text =
+            post.nome
+
+        tvHorario.text =
+            "• ${post.horario}"
+
+        tvTexto.text =
+            post.texto
+
+        val avatarResource =
+            resources.getIdentifier(
+                post.avatarId,
+                "drawable",
+                packageName
+            )
+
+        if (avatarResource != 0) {
+
+            imgAvatar.setImageResource(
+                avatarResource
+            )
+
+        } else {
+
+            imgAvatar.setImageResource(
+                R.drawable.user_profile
+            )
+        }
+
+        if (post.imagemUrl.isNotEmpty()) {
+
+            imgPost.visibility =
+                View.VISIBLE
+
+            Glide.with(this)
+                .load(post.imagemUrl)
+                .into(imgPost)
+
+        } else {
+
+            imgPost.visibility =
+                View.GONE
+        }
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(view)
+            .create()
+
+        dialog.show()
     }
 
     // ESCONDER BARRAS
