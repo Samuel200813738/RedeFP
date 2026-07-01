@@ -101,7 +101,12 @@ class SetupSerieActivity : AppCompatActivity() {
 
             db.collection("users")
                 .document(uid)
-                .update(campo, valor)
+                .set(
+                    mapOf(
+                        campo to valor
+                    ),
+                    com.google.firebase.firestore.SetOptions.merge()
+                )
                 .addOnSuccessListener {
 
                     val intent =

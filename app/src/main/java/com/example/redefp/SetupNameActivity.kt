@@ -76,9 +76,11 @@ class SetupNameActivity : AppCompatActivity() {
 
             db.collection("users")
                 .document(uid)
-                .update(
-                    "nome",
-                    nome
+                .set(
+                    mapOf(
+                        "nome" to nome
+                    ),
+                    com.google.firebase.firestore.SetOptions.merge()
                 )
                 .addOnSuccessListener {
 
