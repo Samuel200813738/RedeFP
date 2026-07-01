@@ -98,9 +98,11 @@ class SetupAvatarActivity : AppCompatActivity() {
 
             db.collection("users")
                 .document(uid)
-                .update(
-                    "avatarId",
-                    avatarSelecionado
+                .set(
+                    mapOf(
+                        "avatarId" to avatarSelecionado
+                    ),
+                    com.google.firebase.firestore.SetOptions.merge()
                 )
                 .addOnSuccessListener {
 

@@ -77,12 +77,37 @@ class SetupDescriptionActivity : AppCompatActivity() {
 
             db.collection("users")
                 .document(uid)
-                .update(
+                .set(
                     mapOf(
                         "descricao" to descricao,
                         "perfilCompleto" to true
-                    )
+                    ),
+                    com.google.firebase.firestore.SetOptions.merge()
                 )
+                .addOnSuccessListener {
+
+                    startActivity(
+                        Intent(
+                            this,
+                            SetupFinishActivity::class.java
+                        )
+                    )
+
+                    overridePendingTransition(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left
+                    )
+
+                    finish()
+                }
+                .addOnFailureListener {
+
+                    Toast.makeText(
+                        this,
+                        "Erro ao salvar descrição",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
                 .addOnSuccessListener {
 
                     startActivity(
